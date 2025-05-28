@@ -10,7 +10,6 @@ class Company(Base):
     name          = Column(String)
     founding_year = Column(Integer)
 
-    # —— Relationships ——
     freebies = relationship("Freebie", back_populates="company")
     devs = relationship(
         "Dev",
@@ -19,14 +18,13 @@ class Company(Base):
         viewonly=True
     )
 
-    # —— Aggregate / Association methods ——
 
     def give_freebie(self, dev, item_name, value):
         """
-        4 pts: creates & returns a new Freebie tied to this company + the given dev.
+        creates & returns a new Freebie tied to this company + the given dev.
         Reuses the existing session to avoid cross‐session errors.
         """
-        # grab the session already managing this Company (fallback to a new one)
+         
         session = object_session(self) or Session()
         # merge the Dev into that same session
         dev = session.merge(dev)
@@ -44,7 +42,7 @@ class Company(Base):
     @classmethod
     def oldest_company(cls):
         """
-        4 pts: returns the Company instance with the earliest founding_year.
+        returns the Company instance with the earliest founding_year.
         """
         session = Session()
         return session.query(cls).order_by(cls.founding_year).first()
