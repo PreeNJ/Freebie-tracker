@@ -28,10 +28,7 @@ class Dev(Base):
         return any(fb.item_name == item_name for fb in self.freebies)
 
     def give_away(self, new_dev, freebie):
-        """
-        change freebie.dev to new_dev,
-        but only if self currently owns that freebie.
-        """
+       
         if freebie in self.freebies:
             session = Session()
             freebie.dev = new_dev
